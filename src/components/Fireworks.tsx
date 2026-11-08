@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { playCrackerBlast } from "../utils/sound";
 
 /* ──────────────────────────────────────────────────────────
    TYPES & PALETTES
@@ -274,6 +275,7 @@ export const Fireworks: React.FC<{ trigger?: number }> = ({ trigger }) => {
           r.exploded = true;
           r.dead = true;
           activeRocket.current = null;
+          playCrackerBlast();
           const pal = CRACKER_PALETTES[(seed - 1) % CRACKER_PALETTES.length];
           explodeRocket(r.x, r.y, pal);
         }

@@ -219,11 +219,40 @@ body {
   z-index: 4;
 }
 
-/* ── Language toggle — securely nested inside card header ── */
-.lang-toggle {
+/* ── Card top controls (Sound & Language) ── */
+.card-top-controls {
   position: absolute;
   top: 12px;
   right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 35;
+  animation: fade-up .4s .15s both;
+}
+.sound-btn {
+  background: rgba(18,8,10,.88);
+  border: 1px solid rgba(218,165,32,.5);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .8rem;
+  cursor: pointer;
+  color: #FFD580;
+  transition: transform .2s, border-color .2s;
+  user-select: none;
+}
+.sound-btn:hover {
+  transform: scale(1.08);
+  border-color: #FFD700;
+}
+.sound-muted {
+  opacity: .65;
+}
+.lang-toggle {
   display: flex;
   align-items: center;
   gap: 2px;
@@ -231,8 +260,6 @@ body {
   border: 1px solid rgba(218,165,32,.5);
   border-radius: 50px;
   padding: .22rem .55rem;
-  z-index: 35;
-  animation: fade-up .4s .15s both;
 }
 .lang-btn {
   background: transparent;
@@ -319,19 +346,19 @@ body {
   text-shadow: 0 1px 4px rgba(0,0,0,.7);
 }
 
-/* ── Diya wrap ── */
+/* ── Diya wrap (delicate small size) ── */
 .diya-wrap {
   position: relative;
   display: flex; align-items: center; justify-content: center;
-  width: 110px; height: 105px;
+  width: 58px; height: 50px;
   flex-shrink: 0;
 }
 .diya-ring {
   position: absolute;
-  width: 95px; height: 95px;
+  width: 48px; height: 48px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,101,10,.22) 0%, rgba(218,165,32,.1) 50%, transparent 70%);
-  border: 1px solid rgba(255,140,0,.3);
+  background: radial-gradient(circle, rgba(232,101,10,.25) 0%, rgba(218,165,32,.1) 50%, transparent 70%);
+  border: 1px solid rgba(255,140,0,.25);
 }
 
 /* ── Spiritual row — framed alcove ── */

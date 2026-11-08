@@ -8,6 +8,7 @@ import { StarField } from "./components/StarField";
 import { Toran } from "./components/Toran";
 import { Fireworks } from "./components/Fireworks";
 import { GoldenParticles } from "./components/GoldenParticles";
+import { toggleSound, getSoundMuted } from "./utils/sound";
 
 /* ── Content strings ── */
 const T = {
@@ -60,7 +61,13 @@ export default function App() {
   useLoadingOverlay();
 
   const [lang, setLang] = useState<Lang>("gu");
+  const [muted, setMuted] = useState(() => getSoundMuted());
   const t = T[lang];
+
+  const onToggleSound = useCallback(() => {
+    const next = toggleSound();
+    setMuted(next);
+  }, []);
 
   /* ── Ultra-smooth Mouse Tilt (Bypasses React re-renders; skipped on touch devices for 60fps) ── */
   const cardRef = useRef<HTMLDivElement>(null);
@@ -137,21 +144,31 @@ export default function App() {
           <Rangoli size={100} />
         </div>
 
-        {/* ── Language toggle — securely nested inside card header ── */}
-        <div className="lang-toggle anim-0" role="group" aria-label="Language">
+        {/* ── Top controls (Sound & Language) securely nested inside card header ── */}
+        <div className="card-top-controls anim-0">
           <button
-            className={`lang-btn ${lang === "gu" ? "lang-active" : ""}`}
-            onClick={() => setLang("gu")}
+            className={`sound-btn ${muted ? "sound-muted" : ""}`}
+            onClick={onToggleSound}
+            aria-label={muted ? "Unmute cracker sound" : "Mute cracker sound"}
+            title={muted ? "Unmute cracker sound" : "Mute cracker sound"}
           >
-            ગુ
+            {muted ? "🔇" : "🔊"}
           </button>
-          <span className="lang-sep">|</span>
-          <button
-            className={`lang-btn ${lang === "en" ? "lang-active" : ""}`}
-            onClick={() => setLang("en")}
-          >
-            EN
-          </button>
+          <div className="lang-toggle" role="group" aria-label="Language">
+            <button
+              className={`lang-btn ${lang === "gu" ? "lang-active" : ""}`}
+              onClick={() => setLang("gu")}
+            >
+              ગુ
+            </button>
+            <span className="lang-sep">|</span>
+            <button
+              className={`lang-btn ${lang === "en" ? "lang-active" : ""}`}
+              onClick={() => setLang("en")}
+            >
+              EN
+            </button>
+          </div>
         </div>
 
         {/* ── Card content ── */}
@@ -175,11 +192,11 @@ export default function App() {
 
           <div className="ornament-line anim-3" />
 
-          {/* Diya Centerpiece */}
+          {/* Delicate Small Diya Emblem */}
           <div className="diya-wrap anim-4">
             <div className="diya-ring animate-pulse-glow" />
             <Diya
-              size={105}
+              size={48}
               interactive
               glowColor="#FFD700"
               className="relative z-10"
