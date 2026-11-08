@@ -34,15 +34,14 @@ body {
 .guj    { font-family: "Noto Serif Gujarati", serif; line-height: 1.85; }
 .cinzel { font-family: "Cinzel Decorative", serif; }
 
-/* ── Blue shimmer text — static, no gradient ── */
+/* ── Warm white text for headings ── */
 .gold-text {
-  color: #E8F4FF;
-  -webkit-text-fill-color: #E8F4FF;
-  text-shadow: 0 0 20px rgba(92,156,230,.6);
+  color: #FFFFFF;
+  -webkit-text-fill-color: #FFFFFF;
+  text-shadow: 0 0 20px rgba(255,200,60,.8), 0 2px 5px rgba(0,0,0,.8);
   animation: none;
 }
 
-/* ── Keyframes ── */
 @keyframes shimmer {
   to { background-position: 200% center; }
 }
@@ -67,8 +66,8 @@ body {
   50%     { box-shadow: 0 0 40px rgba(255,140,0,1),  0 0 80px rgba(218,165,32,.55); }
 }
 @keyframes glow-text {
-  0%,100% { text-shadow: 0 0 14px rgba(232,220,255,.5); }
-  50%     { text-shadow: 0 0 28px rgba(232,220,255,.9), 0 0 50px rgba(92,156,230,.5); }
+  0%,100% { text-shadow: 0 0 14px rgba(255,200,80,.6), 0 2px 4px rgba(0,0,0,.6); }
+  50%     { text-shadow: 0 0 30px rgba(255,200,80,1),  0 0 55px rgba(255,140,0,.5), 0 2px 4px rgba(0,0,0,.6); }
 }
 @keyframes bounce-gentle {
   0%,100% { transform: translateY(0); }
@@ -184,35 +183,28 @@ body {
   overflow: hidden;           /* ← hard no-scroll */
   border-radius: 26px;
   /* Card: solid dark — strong contrast for text */
-  background: #12080A;
+  /* Dark base with a warm amber spotlight bleeding in from top */
+  background: #0E0608;
   border: 1.5px solid rgba(218,165,32,.55);
   box-shadow:
     0 0 0 1px rgba(255,215,0,.08),
     0 12px 55px rgba(0,0,0,.85),
     0 0 80px rgba(255,140,0,.12),
-    inset 0 1px 0 rgba(255,215,0,.08);
+    inset 0 1px 0 rgba(255,215,0,.1);
   animation: card-enter .9s cubic-bezier(.22,1,.36,1) both;
   will-change: transform;
   cursor: default;
 }
 
-/* Animated gold border */
-.diwali-card::before {
-  content: "";
-  position: absolute; inset: -1.5px;
-  border-radius: 27px;
-  background: linear-gradient(135deg,
-    #B8860B, #FFD700, #E8650A, #FFD700, #B8860B);
-  background-size: 300% 300%;
-  animation: shimmer 5s linear infinite;
-  z-index: -1;
-  opacity: .7;
-}
+/* Static gold border — no animation */
+.diwali-card::before { display: none; }
 
-/* Toran at very top */
+/* Toran — compact, sits flush at top */
 .card-toran {
   position: absolute;
   top: 0; left: 0; right: 0;
+  height: 52px;
+  overflow: hidden;
   z-index: 20;
   pointer-events: none;
 }
@@ -226,6 +218,20 @@ body {
 .corner-bl { bottom: -18px; left: -18px; transform: scaleY(-1); }
 .corner-br { bottom: -18px; right: -18px; transform: scale(-1); }
 
+/* Top amber light beam — illuminates title area */
+.card-light-beam {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 200px;
+  background:
+    radial-gradient(ellipse 70% 100% at 50% 0%,
+      rgba(255,200,60,.32) 0%,
+      rgba(255,140,0,.12) 45%,
+      transparent 75%);
+  pointer-events: none;
+  z-index: 4;
+}
+
 /* ── Card body — flex column, fills card height ── */
 .card-body {
   position: relative;
@@ -234,9 +240,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;   /* distribute evenly, no scroll */
+  justify-content: space-evenly;
   gap: 0;
-  padding: 68px 1.6rem 1.4rem;     /* top pad clears toran */
+  /* 58px clears the toran height exactly */
+  padding: 58px 1.6rem 1.2rem;
   text-align: center;
 }
 
@@ -280,7 +287,9 @@ body {
   bottom: calc(50% - min(48vh, 390px) - 28px);
   left:   calc(50% - min(47vw, 270px));
   font-size: .72rem;
-  color: rgba(240,230,211,.45);
+  font-weight: 700;
+  color: #FFFFFF !important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.95), 0 0 20px rgba(255, 255, 255, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9);
   font-family: "Cinzel Decorative", serif;
   letter-spacing: .8px;
   white-space: nowrap;
@@ -300,33 +309,42 @@ body {
 .anim-7 { animation: fade-up .55s 1.12s both; }
 .anim-8 { animation: fade-up .55s 1.26s both; }
 
-/* ── Badge ── */
+/* ── Badge — white, sits just below toran ── */
 .badge {
   display: inline-block;
   padding: .28rem 1rem;
-  background: rgba(255,215,0,.1);
-  border: 1px solid rgba(218,165,32,.55);
+  background: rgba(255,215,0,.12);
+  border: 1px solid rgba(218,165,32,.6);
   border-radius: 50px;
-  color: #FFD580;
+  color: #FFFFFF;
   font-size: .78rem;
   letter-spacing: .5px;
+  text-shadow: 0 1px 3px rgba(0,0,0,.7);
 }
 
-/* ── Title ── */
+/* ── Title — pure white, amber glow from top light ── */
 .card-title {
-  font-size: clamp(1.7rem, 5.5vw, 2.8rem);
+  font-size: clamp(1.8rem, 5.8vw, 3rem);
   font-weight: 900;
   letter-spacing: 2px;
-  line-height: 1.1;
+  line-height: 1.15;
   margin: 0;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  text-shadow:
+    0 0 24px rgba(255,200,60,.95),
+    0 0 50px rgba(255,140,0,.45),
+    0 2px 6px rgba(0,0,0,.9);
+  animation: none;
 }
 
 /* ── Subtitle ── */
 .card-sub {
   font-size: clamp(.88rem, 2.5vw, 1.1rem);
-  color: #FFD580;
+  color: #FFFFFF;
   font-weight: 600;
   letter-spacing: .5px;
+  text-shadow: 0 1px 4px rgba(0,0,0,.7);
 }
 
 /* ── Diya wrap ── */
@@ -364,10 +382,11 @@ body {
 }
 .greeting-line {
   font-size: clamp(.78rem, 2vw, .92rem);
-  color: #F0E6D3;
+  color: #FFFFFF;
   line-height: 1.9;
+  text-shadow: 0 1px 3px rgba(0,0,0,.6);
 }
-.gold-line { color: #FFD580 !important; font-weight: 700; }
+.gold-line { color: #FFE082 !important; font-weight: 700; }
 
 /* ── Spiritual row ── */
 .spiritual-row {
@@ -389,12 +408,13 @@ body {
 }
 .spirit-text {
   font-size: clamp(.68rem, 1.6vw, .8rem);
-  color: #E8DDD0;
+  color: #FFFFFF;
   line-height: 1.8;
   text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,.6);
 }
 .spirit-text strong {
-  color: #FFD580;
+  color: #FFE082;
   display: block;
   margin-bottom: .15rem;
   font-size: clamp(.72rem, 1.8vw, .85rem);
@@ -409,13 +429,16 @@ body {
   width: 100%;
   display: flex; flex-direction: column; align-items: center; gap: .3rem;
 }
-.signoff-from   { font-size: .85rem; color: #FFD580; font-style: italic; }
+.signoff-from   { font-size: .85rem; color: #FFE082; font-style: italic; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
 .signoff-family {
   font-size: clamp(1.4rem, 4.5vw, 2rem);
   font-weight: 900;
   letter-spacing: 1px;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  text-shadow: 0 0 20px rgba(255,200,60,.8), 0 2px 5px rgba(0,0,0,.8);
 }
-.signoff-wish   { font-size: clamp(.75rem, 2vw, .9rem); color: #F0E6D3; }
+.signoff-wish   { font-size: clamp(.75rem, 2vw, .9rem); color: #FFFFFF; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
 
 /* ── Buttons ── */
 .card-actions { display: flex; gap: .7rem; flex-wrap: wrap; justify-content: center; }
