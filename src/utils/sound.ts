@@ -1,8 +1,8 @@
 /* ──────────────────────────────────────────────────────────
    SYNTHESIZED DIWALI CRACKER AUDIO ENGINE (Web Audio API)
-   Generates a realistic patakha blast (shockwave thump +
-   sharp ignition crack + sparkling micro-pops) without
-   needing external audio files.
+   Generates realistic patakha blast audio without external files.
+   Supports 'big' (heavy booming willow/kamuro), 'small' (crisp
+   peony snap), and 'medium' cracker blast variants.
 ────────────────────────────────────────────────────────── */
 
 let audioCtx: AudioContext | null = null;
@@ -53,7 +53,7 @@ export function toggleSound(): boolean {
 }
 
 /* ── Play Authentic Cracker Blast Sound ── */
-export function playCrackerBlast() {
+export function playCrackerBlast(variant: "big" | "small" | "medium" = "medium") {
   if (isMuted) return;
   const ctx = getAudioContext();
   if (!ctx || ctx.state !== "running") return;
@@ -66,22 +66,40 @@ export function playCrackerBlast() {
     const oscGain = ctx.createGain();
 
     osc.type = "sine";
-    osc.frequency.setValueAtTime(150, now);
-    osc.frequency.exponentialRampToValueAtTime(32, now + 0.28);
-
-    oscGain.gain.setValueAtTime(0.7, now);
-    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
-
-    osc.connect(oscGain);
-    oscGain.connect(ctx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.35);
+    if (variant === "big") {
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.exponentialRampToValueAtTime(22, now + 0.42);
+      oscGain.gain.setValueAtTime(0.85, now);
+      oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+      osc.connect(oscGain);
+      oscGain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.48);
+    } else if (variant === "small") {
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(55, now + 0.2);
+      oscGain.gain.setValueAtTime(0.45, now);
+      oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+      osc.connect(oscGain);
+      oscGain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.25);
+    } else {
+      osc.frequency.setValueAtTime(150, now);
+      osc.frequency.exponentialRampToValueAtTime(32, now + 0.28);
+      oscGain.gain.setValueAtTime(0.7, now);
+      oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+      osc.connect(oscGain);
+      oscGain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.35);
+    }
   } catch (_) {}
 
   /* 2. Sharp "CRACK" (High-pressure flash powder ignition snap) */
   try {
-    const bufferSize = Math.floor(ctx.sampleRate * 0.2);
+    const bufferDuration = variant === "big" ? 0.25 : variant === "small" ? 0.12 : 0.2;
+    const bufferSize = Math.floor(ctx.sampleRate * bufferDuration);
     const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const output = noiseBuffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
@@ -93,25 +111,36 @@ export function playCrackerBlast() {
 
     const filter = ctx.createBiquadFilter();
     filter.type = "bandpass";
-    filter.frequency.setValueAtTime(1200, now);
-    filter.Q.setValueAtTime(2.2, now);
+    const centerFreq = variant === "big" ? 950 : variant === "small" ? 1800 : 1200;
+    const qVal = variant === "big" ? 1.8 : variant === "small" ? 3.0 : 2.2;
+    filter.frequency.setValueAtTime(centerFreq, now);
+    filter.Q.setValueAtTime(qVal, now);
 
     const noiseGain = ctx.createGain();
-    noiseGain.gain.setValueAtTime(0.85, now);
-    noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
+    const noiseVol = variant === "big" ? 0.95 : variant === "small" ? 0.6 : 0.85;
+    const fadeTime = variant === "big" ? 0.22 : variant === "small" ? 0.1 : 0.16;
+    noiseGain.gain.setValueAtTime(noiseVol, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.01, now + fadeTime);
 
     whiteNoise.connect(filter);
     filter.connect(noiseGain);
     noiseGain.connect(ctx.destination);
 
     whiteNoise.start(now);
-    whiteNoise.stop(now + 0.2);
+    whiteNoise.stop(now + bufferDuration);
   } catch (_) {}
 
   /* 3. Trailing Micro-Crackles ("Patakha Pop" sparks) */
-  const crackleCount = Math.floor(Math.random() * 4) + 4; // 4 to 7 pops
+  const crackleCount =
+    variant === "big"
+      ? Math.floor(Math.random() * 5) + 8 // 8 to 12 pops for big sparkles
+      : variant === "small"
+      ? Math.floor(Math.random() * 3) + 3 // 3 to 5 snappy pops for small sparkles
+      : Math.floor(Math.random() * 4) + 4; // 4 to 7 pops for medium
+
   for (let k = 0; k < crackleCount; k++) {
-    const delay = 0.08 + Math.random() * 0.38; // 80ms to 460ms after blast
+    const maxDelay = variant === "big" ? 0.6 : variant === "small" ? 0.25 : 0.38;
+    const delay = 0.06 + Math.random() * maxDelay;
     const popTime = now + delay;
 
     try {
@@ -119,13 +148,19 @@ export function playCrackerBlast() {
       const popGain = ctx.createGain();
 
       popOsc.type = "triangle";
-      const startFreq = 800 + Math.random() * 1200;
+      const baseFreq = variant === "big" ? 650 : variant === "small" ? 1200 : 800;
+      const startFreq = baseFreq + Math.random() * 1000;
       popOsc.frequency.setValueAtTime(startFreq, popTime);
-      popOsc.frequency.exponentialRampToValueAtTime(120, popTime + 0.04);
+      popOsc.frequency.exponentialRampToValueAtTime(100, popTime + 0.045);
 
-      const popVol = 0.18 + Math.random() * 0.22;
+      const popVol =
+        variant === "big"
+          ? 0.25 + Math.random() * 0.25
+          : variant === "small"
+          ? 0.12 + Math.random() * 0.14
+          : 0.18 + Math.random() * 0.22;
       popGain.gain.setValueAtTime(popVol, popTime);
-      popGain.gain.exponentialRampToValueAtTime(0.001, popTime + 0.04);
+      popGain.gain.exponentialRampToValueAtTime(0.001, popTime + 0.045);
 
       popOsc.connect(popGain);
       popGain.connect(ctx.destination);
