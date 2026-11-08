@@ -1,6 +1,6 @@
-﻿import React, { useMemo } from "react";
+import React, { useMemo } from "react";
 
-const STAR_COUNT = 55;
+const STAR_COUNT = 18; // lightweight for 60fps mobile performance
 
 export const StarField: React.FC = () => {
   const stars = useMemo(
@@ -9,10 +9,10 @@ export const StarField: React.FC = () => {
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: Math.random() * 3 + 1,
+        size: Math.random() * 2.5 + 1,
         delay: Math.random() * 3,
-        duration: Math.random() * 2 + 1.2,
-        gold: Math.random() > 0.5,
+        duration: Math.random() * 2 + 1.5,
+        gold: Math.random() > 0.4,
       })),
     []
   );
@@ -28,10 +28,11 @@ export const StarField: React.FC = () => {
             top: `${s.y}%`,
             width: s.size,
             height: s.size,
-            background: s.gold ? "#FFD700" : "#ffffff",
+            backgroundColor: s.gold ? "#FFD700" : "#ffffff",
+            opacity: s.gold ? 0.8 : 0.6,
             animationDelay: `${s.delay}s`,
             animationDuration: `${s.duration}s`,
-            boxShadow: s.gold ? `0 0 ${s.size * 3}px #FFD70088` : `0 0 ${s.size * 2}px #ffffff88`,
+            transform: "translateZ(0)",
           }}
         />
       ))}

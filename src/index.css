@@ -31,7 +31,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.guj    { font-family: "Noto Serif Gujarati", serif; line-height: 1.85; }
+.guj    { font-family: "Noto Serif Gujarati", serif; line-height: 1.8; }
 .cinzel { font-family: "Cinzel Decorative", serif; }
 
 /* ── Warm white text for headings ── */
@@ -47,86 +47,76 @@ body {
 }
 @keyframes flicker {
   0%,100% { opacity:1; transform:scaleY(1) scaleX(1) translateY(0); }
-  20%     { opacity:.92; transform:scaleY(1.1) scaleX(.94) translateY(-1px); }
-  40%     { opacity:.97; transform:scaleY(.95) scaleX(1.05) translateY(1px); }
-  60%     { opacity:.85; transform:scaleY(1.07) scaleX(.96) translateY(-2px); }
+  20%     { opacity:.92; transform:scaleY(1.08) scaleX(.95) translateY(-1px); }
+  40%     { opacity:.97; transform:scaleY(.96) scaleX(1.04) translateY(1px); }
+  60%     { opacity:.88; transform:scaleY(1.05) scaleX(.97) translateY(-1px); }
   80%     { opacity:.96; transform:scaleY(.98) scaleX(1.02) translateY(0); }
 }
 @keyframes float {
-  0%,100% { transform: translateY(0) rotate(0deg); }
-  33%     { transform: translateY(-18px) rotate(2deg); }
-  66%     { transform: translateY(-8px) rotate(-2deg); }
+  0%,100% { transform: translate3d(0, 0, 0); }
+  50%     { transform: translate3d(0, -12px, 0); }
 }
 @keyframes twinkle {
-  0%,100% { opacity:1; transform:scale(1); }
-  50%     { opacity:.1; transform:scale(.2); }
+  0%,100% { opacity: 0.85; }
+  50%     { opacity: 0.2; }
 }
 @keyframes pulse-glow {
-  0%,100% { box-shadow: 0 0 18px rgba(232,101,10,.5), 0 0 40px rgba(218,165,32,.25); }
-  50%     { box-shadow: 0 0 40px rgba(255,140,0,1),  0 0 80px rgba(218,165,32,.55); }
+  0%,100% { box-shadow: 0 0 16px rgba(232,101,10,.4), 0 0 32px rgba(218,165,32,.2); }
+  50%     { box-shadow: 0 0 32px rgba(255,140,0,.8),  0 0 60px rgba(218,165,32,.4); }
 }
 @keyframes glow-text {
   0%,100% { text-shadow: 0 0 14px rgba(255,200,80,.6), 0 2px 4px rgba(0,0,0,.6); }
-  50%     { text-shadow: 0 0 30px rgba(255,200,80,1),  0 0 55px rgba(255,140,0,.5), 0 2px 4px rgba(0,0,0,.6); }
+  50%     { text-shadow: 0 0 28px rgba(255,200,80,1),  0 0 45px rgba(255,140,0,.5), 0 2px 4px rgba(0,0,0,.6); }
 }
 @keyframes bounce-gentle {
   0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-10px); }
+  50%     { transform: translateY(-8px); }
 }
 @keyframes spin-slow { to { transform: rotate(360deg); } }
 @keyframes toran-sway {
-  0%,100% { transform: rotate(-5deg); }
-  50%     { transform: rotate(5deg); }
+  0%,100% { transform: rotate(-4deg); }
+  50%     { transform: rotate(4deg); }
 }
 @keyframes petal-fall {
-  0%   { transform: translateY(-5vh) translateX(0) rotate(0deg); opacity:0; }
-  8%   { opacity:.9; }
-  92%  { opacity:.6; }
-  100% { transform: translateY(105vh) translateX(var(--drift,50px)) rotate(var(--spin,540deg)); opacity:0; }
+  0%   { transform: translate3d(0, -5vh, 0) rotate(0deg); opacity:0; }
+  8%   { opacity:.85; }
+  92%  { opacity:.55; }
+  100% { transform: translate3d(var(--drift,40px), 105vh, 0) rotate(var(--spin,270deg)); opacity:0; }
 }
 @keyframes card-enter {
-  from { opacity:0; transform: perspective(1000px) scale(.9) translateY(24px); }
+  from { opacity:0; transform: perspective(1000px) scale(.92) translateY(18px); }
   to   { opacity:1; transform: perspective(1000px) scale(1) translateY(0); }
 }
 @keyframes fade-up {
-  from { opacity:0; transform: translateY(16px); }
+  from { opacity:0; transform: translateY(12px); }
   to   { opacity:1; transform: translateY(0); }
-}
-@keyframes loading-pulse {
-  0%,100% { transform:scale(1); filter:brightness(1); }
-  50%     { transform:scale(1.15); filter:brightness(1.5); }
 }
 
 /* ── Utility animations ── */
 .animate-flicker       { animation: flicker 2s ease-in-out infinite; }
 .animate-float         { animation: float 4s ease-in-out infinite; }
-.animate-twinkle       { animation: twinkle 1.8s ease-in-out infinite; }
+.animate-twinkle       { animation: twinkle 2s ease-in-out infinite; }
 .animate-pulse-glow    { animation: pulse-glow 2.5s ease-in-out infinite; }
 .animate-glow-text     { animation: glow-text 2.5s ease-in-out infinite; }
 .animate-bounce-gentle { animation: bounce-gentle 3s ease-in-out infinite; }
 .animate-spin-slow     { animation: spin-slow 24s linear infinite; }
 
-/* ── Ornament divider — gold stays for decorative lines ── */
+/* ── Ornament divider ── */
 .ornament-line {
   display: flex; align-items: center; gap: 8px; justify-content: center; width: 100%;
 }
 .ornament-line::before,
 .ornament-line::after {
   content: ""; flex: 1; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(218,165,32,.6), rgba(255,215,0,.9), rgba(218,165,32,.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(218,165,32,.5), rgba(255,215,0,.8), rgba(218,165,32,.5), transparent);
 }
-
-/* ── Scrollbar ── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: linear-gradient(var(--saffron), var(--gold-lt)); border-radius: 4px; }
 
 /* ── Loading overlay ── */
 #loading-overlay {
   position: fixed; inset: 0; z-index: 9999;
   background: radial-gradient(ellipse at center, #5C2000 0%, #2A0E00 55%, #1A0800 100%);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: opacity .9s ease, visibility .9s ease;
+  transition: opacity .6s ease, visibility .6s ease;
 }
 #loading-overlay.hidden { opacity:0; visibility:hidden; pointer-events:none; }
 
@@ -142,68 +132,65 @@ body {
 }
 
 /* ══════════════════════════════════════════
-   BLURRED BACKGROUND
+   HIGH PERFORMANCE AMBIENT BACKGROUND
+   Smooth CSS gradients with 0 GPU lag
 ══════════════════════════════════════════ */
 .bg-layer {
   position: absolute; inset: 0; z-index: 0; overflow: hidden;
+  transform: translateZ(0);
 }
 
 .bg-gradient {
   position: absolute; inset: 0;
-  /* Warm Diwali night: deep amber centre, saffron blooms, dark edges */
   background:
-    radial-gradient(ellipse 65% 50% at 50% 45%, rgba(255,140,0,.55)  0%, transparent 55%),
-    radial-gradient(ellipse 40% 35% at 18% 65%, rgba(232,101,10,.40) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 35% at 82% 65%, rgba(232,101,10,.40) 0%, transparent 50%),
-    radial-gradient(ellipse 30% 25% at 50% 10%, rgba(255,200,50,.25) 0%, transparent 45%),
-    linear-gradient(180deg, #0D0400 0%, #2A0E00 30%, #4A1800 55%, #2A0E00 78%, #0D0400 100%);
+    radial-gradient(circle 600px at 50% 40%, rgba(255,140,0,.35) 0%, transparent 70%),
+    radial-gradient(circle 450px at 15% 70%, rgba(232,101,10,.25) 0%, transparent 65%),
+    radial-gradient(circle 450px at 85% 70%, rgba(232,101,10,.25) 0%, transparent 65%),
+    linear-gradient(180deg, #0D0400 0%, #240B00 35%, #3B1200 60%, #1A0700 85%, #0A0300 100%);
 }
 
-.bg-rangoli { position: absolute; opacity: .1; pointer-events: none; }
-.bg-rangoli-l { left: -90px; top: 50%; transform: translateY(-50%); }
-.bg-rangoli-r { right: -90px; top: 50%; transform: translateY(-50%); }
+.bg-rangoli {
+  position: absolute; opacity: .07; pointer-events: none;
+  transform: translateZ(0);
+}
+.bg-rangoli-l { left: -90px; top: 50%; transform: translateY(-50%) translateZ(0); }
+.bg-rangoli-r { right: -90px; top: 50%; transform: translateY(-50%) translateZ(0); }
 
-/* Blur veil — heavy blur keeps bg impressionistic */
+/* High-perf smooth vignette (replaces costly 22px live backdrop-filter) */
 .bg-blur {
   position: absolute; inset: 0;
-  backdrop-filter: blur(22px) brightness(.55) saturate(1.6);
-  -webkit-backdrop-filter: blur(22px) brightness(.55) saturate(1.6);
-  background: rgba(15,5,0,.3);
+  background: radial-gradient(ellipse at center, rgba(15,5,0,.15) 0%, rgba(10,3,0,.65) 100%);
+  pointer-events: none;
 }
 
 /* ══════════════════════════════════════════
-   DIWALI CARD  — fixed height, NO scroll
+   DIWALI CARD  — responsive, hardware-accelerated
 ══════════════════════════════════════════ */
 .diwali-card {
   position: relative;
   z-index: 10;
-  /* Fit entirely in viewport — no overflow */
-  width: min(94vw, 540px);
-  height: min(96vh, 780px);
-  overflow: hidden;           /* ← hard no-scroll */
-  border-radius: 26px;
-  /* Card: solid dark — strong contrast for text */
-  /* Dark base with a warm amber spotlight bleeding in from top */
+  width: min(94vw, 490px);
+  height: min(96vh, 760px);
+  overflow: hidden;
+  border-radius: 24px;
   background: #0E0608;
   border: 1.5px solid rgba(218,165,32,.55);
   box-shadow:
     0 0 0 1px rgba(255,215,0,.08),
-    0 12px 55px rgba(0,0,0,.85),
-    0 0 80px rgba(255,140,0,.12),
-    inset 0 1px 0 rgba(255,215,0,.1);
-  animation: card-enter .9s cubic-bezier(.22,1,.36,1) both;
+    0 12px 50px rgba(0,0,0,.85),
+    0 0 60px rgba(255,140,0,.12);
+  animation: card-enter .7s cubic-bezier(.22,1,.36,1) both;
   will-change: transform;
+  contain: layout paint;
   cursor: default;
+  touch-action: manipulation;
 }
-
-/* Static gold border — no animation */
-.diwali-card::before { display: none; }
 
 /* Toran — compact, sits flush at top */
 .card-toran {
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 52px;
+  height: 48px;
   overflow: hidden;
   z-index: 20;
   pointer-events: none;
@@ -213,26 +200,57 @@ body {
 .corner-rangoli {
   position: absolute; opacity: .1; pointer-events: none; z-index: 1;
 }
-.corner-tl { top: -18px; left: -18px; }
-.corner-tr { top: -18px; right: -18px; transform: scaleX(-1); }
-.corner-bl { bottom: -18px; left: -18px; transform: scaleY(-1); }
-.corner-br { bottom: -18px; right: -18px; transform: scale(-1); }
+.corner-tl { top: -16px; left: -16px; }
+.corner-tr { top: -16px; right: -16px; transform: scaleX(-1); }
+.corner-bl { bottom: -16px; left: -16px; transform: scaleY(-1); }
+.corner-br { bottom: -16px; right: -16px; transform: scale(-1); }
 
-/* Top amber light beam — illuminates title area */
+/* Top amber light beam */
 .card-light-beam {
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 200px;
+  height: 180px;
   background:
     radial-gradient(ellipse 70% 100% at 50% 0%,
-      rgba(255,200,60,.32) 0%,
-      rgba(255,140,0,.12) 45%,
+      rgba(255,200,60,.28) 0%,
+      rgba(255,140,0,.10) 45%,
       transparent 75%);
   pointer-events: none;
   z-index: 4;
 }
 
-/* ── Card body — flex column, fills card height ── */
+/* ── Language toggle — securely nested inside card header ── */
+.lang-toggle {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(18,8,10,.88);
+  border: 1px solid rgba(218,165,32,.5);
+  border-radius: 50px;
+  padding: .22rem .55rem;
+  z-index: 35;
+  animation: fade-up .4s .15s both;
+}
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: rgba(240,230,211,.55);
+  font-size: .75rem;
+  font-weight: 700;
+  font-family: "Noto Serif Gujarati", serif;
+  cursor: pointer;
+  padding: .1rem .3rem;
+  border-radius: 50px;
+  transition: color .2s, background .2s;
+}
+.lang-btn:hover  { color: #FFD580; }
+.lang-active     { color: #FFD580 !important; background: rgba(218,165,32,.22); }
+.lang-sep        { color: rgba(218,165,32,.35); font-size: .68rem; user-select: none; }
+
+/* ── Card body — flex column, filled evenly ── */
 .card-body {
   position: relative;
   z-index: 5;
@@ -240,110 +258,64 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  gap: 0;
-  /* 58px clears the toran height exactly */
-  padding: 58px 1.6rem 1.2rem;
+  justify-content: space-between;
+  padding: 46px 1.25rem 0.85rem;
   text-align: center;
 }
 
-/* ── Language toggle — floats top-right relative to card ── */
-.lang-toggle {
-  position: absolute;
-  top: calc(50% - min(48vh, 390px) - 36px);
-  left: calc(50% + min(47vw, 270px) - 88px);
+.card-header-group {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 2px;
-  background: rgba(18,8,10,.85);
-  border: 1px solid rgba(218,165,32,.45);
-  border-radius: 50px;
-  padding: .28rem .7rem;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 20;
-  animation: fade-up .5s .2s both;
-}
-.lang-btn {
-  background: transparent;
-  border: none;
-  color: rgba(240,230,211,.5);
-  font-size: .78rem;
-  font-weight: 700;
-  font-family: "Noto Serif Gujarati", serif;
-  cursor: pointer;
-  padding: .1rem .35rem;
-  border-radius: 50px;
-  transition: color .2s, background .2s;
-  letter-spacing: .5px;
-}
-.lang-btn:hover  { color: #FFD580; }
-.lang-active     { color: #FFD580 !important; background: rgba(218,165,32,.18); }
-.lang-sep        { color: rgba(218,165,32,.3); font-size: .7rem; user-select: none; }
-
-/* ── Author watermark — bottom-left below card ── */
-.author-tag {
-  position: absolute;
-  bottom: calc(50% - min(48vh, 390px) - 28px);
-  left:   calc(50% - min(47vw, 270px));
-  font-size: .72rem;
-  font-weight: 700;
-  color: #FFFFFF !important;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.95), 0 0 20px rgba(255, 255, 255, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9);
-  font-family: "Cinzel Decorative", serif;
-  letter-spacing: .8px;
-  white-space: nowrap;
-  animation: fade-up .5s .3s both;
-  pointer-events: none;
-  user-select: none;
+  width: 100%;
 }
 
 /* ── Staggered entrance ── */
-.anim-0 { animation: fade-up .5s .15s both; }
-.anim-1 { animation: fade-up .55s .25s both; }
-.anim-2 { animation: fade-up .55s .42s both; }
-.anim-3 { animation: fade-up .55s .56s both; }
-.anim-4 { animation: fade-up .55s .70s both; }
-.anim-5 { animation: fade-up .55s .84s both; }
-.anim-6 { animation: fade-up .55s .98s both; }
-.anim-7 { animation: fade-up .55s 1.12s both; }
-.anim-8 { animation: fade-up .55s 1.26s both; }
+.anim-0 { animation: fade-up .4s .1s both; }
+.anim-1 { animation: fade-up .45s .2s both; }
+.anim-2 { animation: fade-up .45s .3s both; }
+.anim-3 { animation: fade-up .45s .4s both; }
+.anim-4 { animation: fade-up .45s .5s both; }
+.anim-5 { animation: fade-up .45s .6s both; }
+.anim-6 { animation: fade-up .45s .7s both; }
+.anim-7 { animation: fade-up .45s .8s both; }
+.anim-8 { animation: fade-up .45s .9s both; }
 
-/* ── Badge — white, sits just below toran ── */
+/* ── Badge ── */
 .badge {
   display: inline-block;
-  padding: .28rem 1rem;
+  padding: .22rem .85rem;
   background: rgba(255,215,0,.12);
   border: 1px solid rgba(218,165,32,.6);
   border-radius: 50px;
   color: #FFFFFF;
-  font-size: .78rem;
-  letter-spacing: .5px;
+  font-size: .74rem;
+  letter-spacing: .4px;
   text-shadow: 0 1px 3px rgba(0,0,0,.7);
 }
 
-/* ── Title — pure white, amber glow from top light ── */
+/* ── Title ── */
 .card-title {
-  font-size: clamp(1.8rem, 5.8vw, 3rem);
+  font-size: clamp(1.7rem, 5.2vw, 2.6rem);
   font-weight: 900;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   line-height: 1.15;
   margin: 0;
   color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
   text-shadow:
-    0 0 24px rgba(255,200,60,.95),
-    0 0 50px rgba(255,140,0,.45),
+    0 0 20px rgba(255,200,60,.95),
+    0 0 45px rgba(255,140,0,.45),
     0 2px 6px rgba(0,0,0,.9);
-  animation: none;
 }
 
 /* ── Subtitle ── */
 .card-sub {
-  font-size: clamp(.88rem, 2.5vw, 1.1rem);
+  font-size: clamp(.84rem, 2.2vw, 1.02rem);
   color: #FFFFFF;
   font-weight: 600;
-  letter-spacing: .5px;
+  letter-spacing: .4px;
   text-shadow: 0 1px 4px rgba(0,0,0,.7);
 }
 
@@ -351,162 +323,119 @@ body {
 .diya-wrap {
   position: relative;
   display: flex; align-items: center; justify-content: center;
-  width: 140px; height: 140px;
+  width: 110px; height: 105px;
   flex-shrink: 0;
 }
 .diya-ring {
   position: absolute;
-  width: 128px; height: 128px;
+  width: 95px; height: 95px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,101,10,.2) 0%, rgba(218,165,32,.1) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(232,101,10,.22) 0%, rgba(218,165,32,.1) 50%, transparent 70%);
   border: 1px solid rgba(255,140,0,.3);
 }
-.spark {
-  position: absolute;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #FFD700, #E8650A);
-  box-shadow: 0 0 6px #FFD700;
-  top: 50%; left: 50%;
-  margin: -3px 0 0 -3px;
-  transform-origin: 3px 3px;
-}
 
-/* ── Greeting ── */
-.greeting {
-  width: 100%;
-  padding: .6rem 1rem;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(218,165,32,.3);
-  border-radius: 12px;
-}
-.greeting-line {
-  font-size: clamp(.78rem, 2vw, .92rem);
-  color: #FFFFFF;
-  line-height: 1.9;
-  text-shadow: 0 1px 3px rgba(0,0,0,.6);
-}
-.gold-line { color: #FFE082 !important; font-weight: 700; }
-
-/* ── Spiritual row ── */
+/* ── Spiritual row — framed alcove ── */
 .spiritual-row {
   display: flex;
-  gap: .8rem;
+  gap: .65rem;
   width: 100%;
-  align-items: flex-start;
+  align-items: center;
+  background: rgba(255,255,255,.035);
+  border: 1px solid rgba(218,165,32,.25);
+  border-radius: 14px;
+  padding: .45rem .6rem;
 }
 .spirit-block {
   flex: 1;
-  display: flex; flex-direction: column; align-items: center; gap: .25rem;
+  display: flex; flex-direction: column; align-items: center; gap: .2rem;
 }
 .deity-img {
-  width: 78px;
-  height: 78px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 14px rgba(255,140,0,.55)) drop-shadow(0 0 6px rgba(218,165,32,.4));
+  filter: drop-shadow(0 3px 8px rgba(255,140,0,.45));
   flex-shrink: 0;
+  transform: translateZ(0);
 }
 .spirit-text {
-  font-size: clamp(.68rem, 1.6vw, .8rem);
+  font-size: clamp(.65rem, 1.7vw, .76rem);
   color: #FFFFFF;
-  line-height: 1.8;
+  line-height: 1.65;
   text-align: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.6);
 }
 .spirit-text strong {
   color: #FFE082;
   display: block;
-  margin-bottom: .15rem;
-  font-size: clamp(.72rem, 1.8vw, .85rem);
+  margin-bottom: .1rem;
+  font-size: clamp(.68rem, 1.8vw, .8rem);
 }
 .spirit-divider {
   width: 1px; align-self: stretch; flex-shrink: 0;
-  background: linear-gradient(180deg, transparent, rgba(218,165,32,.5), transparent);
+  background: linear-gradient(180deg, transparent, rgba(218,165,32,.45), transparent);
 }
+
+/* ── Greeting ── */
+.greeting {
+  width: 100%;
+  padding: .42rem .8rem;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(218,165,32,.22);
+  border-radius: 12px;
+}
+.greeting-line {
+  font-size: clamp(.74rem, 1.9vw, .86rem);
+  color: #FFFFFF;
+  line-height: 1.75;
+  text-shadow: 0 1px 3px rgba(0,0,0,.6);
+}
+.gold-line { color: #FFE082 !important; font-weight: 700; }
 
 /* ── Sign-off ── */
 .signoff {
   width: 100%;
-  display: flex; flex-direction: column; align-items: center; gap: .3rem;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
 }
-.signoff-from   { font-size: .85rem; color: #FFE082; font-style: italic; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.signoff-from   { font-size: .8rem; color: #FFE082; font-style: italic; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
 .signoff-family {
-  font-size: clamp(1.4rem, 4.5vw, 2rem);
+  font-size: clamp(1.3rem, 4.2vw, 1.85rem);
   font-weight: 900;
   letter-spacing: 1px;
   color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
-  text-shadow: 0 0 20px rgba(255,200,60,.8), 0 2px 5px rgba(0,0,0,.8);
+  text-shadow: 0 0 18px rgba(255,200,60,.8), 0 2px 4px rgba(0,0,0,.8);
 }
-.signoff-wish   { font-size: clamp(.75rem, 2vw, .9rem); color: #FFFFFF; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.signoff-wish   { font-size: clamp(.72rem, 1.8vw, .84rem); color: #FFFFFF; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
 
-/* ── Buttons ── */
-.card-actions { display: flex; gap: .7rem; flex-wrap: wrap; justify-content: center; }
-
-.btn-gold {
-  padding: .5rem 1.3rem;
-  background: linear-gradient(135deg, #0D2B6E, #1565C0, #2196F3, #1565C0, #0D2B6E);
-  background-size: 200% auto;
-  color: #fff;
-  font-family: "Noto Serif Gujarati", serif;
-  font-size: .82rem;
+/* ── Author watermark — highlighted intense white ── */
+.author-tag {
+  margin-top: 6px;
+  font-size: .72rem;
   font-weight: 700;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(21,101,192,.5);
-  transition: background-position .4s, transform .2s, box-shadow .3s;
+  color: #FFFFFF !important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.95), 0 0 20px rgba(255, 255, 255, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9);
+  font-family: "Cinzel Decorative", serif;
+  letter-spacing: .8px;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
 }
-.btn-gold:hover {
-  background-position: right center;
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 8px 26px rgba(33,150,243,.65);
-}
-.btn-gold:active { transform: scale(.97); }
-
-.btn-outline {
-  padding: .5rem 1.3rem;
-  background: transparent;
-  color: #FFD580;
-  font-family: "Noto Serif Gujarati", serif;
-  font-size: .82rem;
-  font-weight: 600;
-  border: 1.5px solid rgba(218,165,32,.55);
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background .3s, transform .2s;
-}
-.btn-outline:hover {
-  background: rgba(218,165,32,.1);
-  transform: translateY(-2px);
-}
-.btn-outline:active { transform: scale(.97); }
 
 /* ══════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE BREAKPOINTS
 ══════════════════════════════════════════ */
-
-/* Tall phones — slightly more padding */
-@media (min-height: 800px) {
-  .card-body { padding-top: 72px; }
+@media (max-height: 700px) {
+  .diwali-card { height: min(97vh, 620px); }
+  .card-body { padding: 42px .9rem .6rem; }
+  .diya-wrap { width: 90px; height: 85px; }
+  .diya-ring { width: 80px; height: 80px; }
+  .deity-img { width: 52px; height: 52px; }
+  .card-title { font-size: clamp(1.4rem, 4.5vw, 2rem); }
 }
 
-/* Short phones — shrink diya & fonts */
-@media (max-height: 680px) {
-  .diwali-card { height: min(98vh, 640px); }
-  .card-body { padding: 60px 1.2rem 1rem; }
-  .diya-wrap { width: 110px; height: 110px; }
-  .diya-ring { width: 100px; height: 100px; }
-  .card-title { font-size: clamp(1.4rem, 5vw, 2.2rem); }
-  .spirit-text { font-size: .68rem; }
-  .greeting-line { font-size: .75rem; }
-}
-
-/* Narrow phones */
 @media (max-width: 380px) {
-  .card-body { padding-left: 1rem; padding-right: 1rem; }
-  .spiritual-row { flex-direction: column; }
-  .spirit-divider { width: 100%; height: 1px; align-self: auto; }
+  .card-body { padding-left: .75rem; padding-right: .75rem; }
+  .deity-img { width: 50px; height: 50px; }
   .corner-rangoli { display: none; }
 }
 

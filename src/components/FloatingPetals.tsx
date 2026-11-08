@@ -1,7 +1,7 @@
-﻿import React, { useMemo } from "react";
+import React, { useMemo } from "react";
 
-const COLORS = ["#FF6B35","#FFD700","#FF8C42","#FFC107","#FF5252","#FFAB40"];
-const PETAL_COUNT = 18;
+const COLORS = ["#FF6B35", "#FFD700", "#FF8C42", "#FF5252"];
+const PETAL_COUNT = 7; // lightweight count for smooth mobile rendering
 
 export const FloatingPetals: React.FC = () => {
   const petals = useMemo(
@@ -10,11 +10,11 @@ export const FloatingPetals: React.FC = () => {
         id: i,
         x: Math.random() * 100,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
-        size: Math.random() * 14 + 8,
-        delay: Math.random() * 12,
-        duration: Math.random() * 8 + 10,
-        drift: (Math.random() - 0.5) * 120,
-        spin: Math.random() * 720 - 360,
+        size: Math.random() * 10 + 8,
+        delay: Math.random() * 8,
+        duration: Math.random() * 6 + 9,
+        drift: (Math.random() - 0.5) * 80,
+        spin: Math.random() * 360 - 180,
       })),
     []
   );
@@ -31,18 +31,15 @@ export const FloatingPetals: React.FC = () => {
             width: p.size,
             height: p.size,
             animation: `petal-fall ${p.duration}s ${p.delay}s ease-in infinite`,
+            transform: "translateZ(0)",
             "--drift": `${p.drift}px`,
             "--spin": `${p.spin}deg`,
           } as React.CSSProperties}
         >
-          {/* Petal SVG */}
-          <svg viewBox="0 0 24 24" fill={p.color} opacity={0.85}>
-            <ellipse cx="12" cy="8" rx="5" ry="9" transform="rotate(0 12 12)" />
+          <svg viewBox="0 0 24 24" fill={p.color} opacity={0.75}>
+            <ellipse cx="12" cy="8" rx="5" ry="9" />
             <ellipse cx="12" cy="8" rx="5" ry="9" transform="rotate(60 12 12)" />
             <ellipse cx="12" cy="8" rx="5" ry="9" transform="rotate(120 12 12)" />
-            <ellipse cx="12" cy="8" rx="5" ry="9" transform="rotate(180 12 12)" />
-            <ellipse cx="12" cy="8" rx="5" ry="9" transform="rotate(240 12 12)" />
-            <ellipse cx="12" cy="8" rx="5" ry="9" transform="rotate(300 12 12)" />
           </svg>
         </div>
       ))}

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-const COUNT = 28;
+const COUNT = 10; // low count for silky 60fps on mobile
 
 export const GoldenParticles: React.FC = () => {
   const particles = useMemo(() =>
@@ -8,10 +8,10 @@ export const GoldenParticles: React.FC = () => {
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 5 + 2,
-      delay: Math.random() * 6,
-      duration: Math.random() * 5 + 5,
-      opacity: Math.random() * 0.6 + 0.3,
+      size: Math.random() * 3.5 + 2,
+      delay: Math.random() * 5,
+      duration: Math.random() * 4 + 5,
+      opacity: Math.random() * 0.4 + 0.25,
     })), []);
 
   return (
@@ -25,10 +25,10 @@ export const GoldenParticles: React.FC = () => {
             top: `${p.y}%`,
             width: p.size,
             height: p.size,
-            background: `radial-gradient(circle, #FFD700, #DAA520)`,
+            background: "radial-gradient(circle, #FFD700 30%, rgba(218,165,32,0) 70%)",
             opacity: p.opacity,
             animation: `float ${p.duration}s ${p.delay}s ease-in-out infinite`,
-            boxShadow: `0 0 ${p.size * 2}px #FFD70066`,
+            transform: "translateZ(0)",
           }}
         />
       ))}

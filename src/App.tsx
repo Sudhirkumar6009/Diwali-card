@@ -51,7 +51,7 @@ function useLoadingOverlay() {
   useEffect(() => {
     const el = document.getElementById("loading-overlay");
     if (!el) return;
-    const t = setTimeout(() => el.classList.add("hidden"), 1800);
+    const t = setTimeout(() => el.classList.add("hidden"), 1200);
     return () => clearTimeout(t);
   }, []);
 }
@@ -60,135 +60,175 @@ export default function App() {
   useLoadingOverlay();
 
   const [lang, setLang] = useState<Lang>("gu");
-
   const t = T[lang];
 
-  /* ── Pointer tilt ── */
+  /* ── Ultra-smooth Mouse Tilt (Bypasses React re-renders; skipped on touch devices for 60fps) ── */
   const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ rx: 0, ry: 0, scale: 1 });
   const rafRef = useRef<number>(0);
 
   const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse") return;
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
     const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
     const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
     cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(() =>
-      setTilt({ rx: -dy * 10, ry: dx * 10, scale: 1.035 }),
-    );
+    rafRef.current = requestAnimationFrame(() => {
+      if (card) {
+        card.style.transform = `perspective(900px) rotateX(${-dy * 7}deg) rotateY(${dx * 7}deg) scale(1.015)`;
+      }
+    });
   }, []);
 
   const onPointerLeave = useCallback(() => {
     cancelAnimationFrame(rafRef.current);
-    setTilt({ rx: 0, ry: 0, scale: 1 });
+    const card = cardRef.current;
+    if (card) {
+      card.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
+    }
   }, []);
 
   return (
     <div className="page-root">
-      {/* ── Blurred background ── */}
+      {/* ── High-performance ambient background ── */}
       <div className="bg-layer" aria-hidden="true">
         <div className="bg-gradient" />
         <StarField />
         <FloatingPetals />
         <GoldenParticles />
         <div className="bg-rangoli bg-rangoli-l">
-          <Rangoli size={380} spin />
+          <Rangoli size={360} spin={false} />
         </div>
         <div className="bg-rangoli bg-rangoli-r">
-          <Rangoli size={380} spin />
+          <Rangoli size={360} spin={false} />
         </div>
         <div className="bg-blur" />
       </div>
 
-      {/* ── Language toggle — top-right above card ── */}
-      <div className="lang-toggle anim-0" role="group" aria-label="Language">
-        <button
-          className={`lang-btn ${lang === "gu" ? "lang-active" : ""}`}
-          onClick={() => setLang("gu")}
-        >
-          ગુ
-        </button>
-        <span className="lang-sep">|</span>
-        <button
-          className={`lang-btn ${lang === "en" ? "lang-active" : ""}`}
-          onClick={() => setLang("en")}
-        >
-          EN
-        </button>
-      </div>
-
-      {/* ── Single Card ── */}
+      {/* ── Single Royal Card ── */}
       <div
         ref={cardRef}
         className="diwali-card"
-        style={{
-          transform: `perspective(900px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) scale(${tilt.scale})`,
-          transition:
-            tilt.scale === 1
-              ? "transform .6s cubic-bezier(.22,1,.36,1)"
-              : "transform .08s linear",
-        }}
         onPointerMove={onPointerMove}
         onPointerLeave={onPointerLeave}
       >
         <Fireworks />
+
+        {/* Toran header */}
         <div className="card-toran">
           <Toran />
         </div>
+
+        {/* Top ambient illumination beam */}
         <div className="card-light-beam" aria-hidden="true" />
+
+        {/* Decorative corner rangolis */}
         <div className="corner-rangoli corner-tl">
-          <Rangoli size={110} />
+          <Rangoli size={100} />
         </div>
         <div className="corner-rangoli corner-tr">
-          <Rangoli size={110} />
+          <Rangoli size={100} />
         </div>
         <div className="corner-rangoli corner-bl">
-          <Rangoli size={110} />
+          <Rangoli size={100} />
         </div>
         <div className="corner-rangoli corner-br">
-          <Rangoli size={110} />
+          <Rangoli size={100} />
         </div>
 
-        <div className="card-body">
-          <span className={`badge anim-1 ${lang === "gu" ? "guj" : ""}`}>
-            {t.badge}
-          </span>
-
-          <h1
-            className={`card-title gold-text anim-2 ${lang === "gu" ? "guj" : "cinzel"}`}
+        {/* ── Language toggle — securely nested inside card header ── */}
+        <div className="lang-toggle anim-0" role="group" aria-label="Language">
+          <button
+            className={`lang-btn ${lang === "gu" ? "lang-active" : ""}`}
+            onClick={() => setLang("gu")}
           >
-            {t.title}
-          </h1>
+            ગુ
+          </button>
+          <span className="lang-sep">|</span>
+          <button
+            className={`lang-btn ${lang === "en" ? "lang-active" : ""}`}
+            onClick={() => setLang("en")}
+          >
+            EN
+          </button>
+        </div>
 
-          <p className={`card-sub anim-3 ${lang === "gu" ? "guj" : ""}`}>
-            {t.sub}
-          </p>
+        {/* ── Card content ── */}
+        <div className="card-body">
+          {/* Header group */}
+          <div className="card-header-group">
+            <span className={`badge anim-1 ${lang === "gu" ? "guj" : ""}`}>
+              {t.badge}
+            </span>
+
+            <h1
+              className={`card-title gold-text anim-2 ${lang === "gu" ? "guj" : "cinzel"}`}
+            >
+              {t.title}
+            </h1>
+
+            <p className={`card-sub anim-3 ${lang === "gu" ? "guj" : ""}`}>
+              {t.sub}
+            </p>
+          </div>
 
           <div className="ornament-line anim-3" />
 
+          {/* Diya Centerpiece */}
           <div className="diya-wrap anim-4">
             <div className="diya-ring animate-pulse-glow" />
             <Diya
-              size={120}
+              size={105}
               interactive
               glowColor="#FFD700"
               className="relative z-10"
             />
-            {[0, 60, 120, 180, 240, 300].map((deg) => (
-              <div
-                key={deg}
-                className="spark animate-twinkle"
-                style={{
-                  transform: `rotate(${deg}deg) translateY(-72px)`,
-                  animationDelay: `${deg / 300}s`,
-                }}
-              />
-            ))}
           </div>
 
-          <div className="greeting anim-5">
+          {/* Sacred Deities */}
+          <div className="spiritual-row anim-5">
+            <div className="spirit-block">
+              <img
+                src={ganpatiImg}
+                alt="Ganpati"
+                className="deity-img"
+                loading="eager"
+                decoding="async"
+              />
+              <div className={`spirit-text ${lang === "gu" ? "guj" : ""}`}>
+                <strong>{t.ganesh}</strong>
+                {t.ganeshVerse.split("\n").map((l, i) => (
+                  <span key={i}>
+                    {l}
+                    <br />
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="spirit-divider" />
+            <div className="spirit-block">
+              <img
+                src={laxmiImg}
+                alt="Mahalaxmi"
+                className="deity-img"
+                loading="eager"
+                decoding="async"
+              />
+              <div className={`spirit-text ${lang === "gu" ? "guj" : ""}`}>
+                <strong>{t.lakshmi}</strong>
+                {t.lakshmiDesc.split("\n").map((l, i) => (
+                  <span key={i}>
+                    {l}
+                    <br />
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Greeting Box */}
+          <div className="greeting anim-6">
             <p className={`greeting-line ${lang === "gu" ? "guj" : ""}`}>
               {t.greet1}
             </p>
@@ -199,35 +239,8 @@ export default function App() {
             </p>
           </div>
 
-          <div className="spiritual-row anim-6">
-            <div className="spirit-block">
-              <img src={ganpatiImg} alt="Ganpati" className="deity-img" />
-              <p className={`spirit-text ${lang === "gu" ? "guj" : ""}`}>
-                <strong>{t.ganesh}</strong>
-                {t.ganeshVerse.split("\n").map((l, i) => (
-                  <span key={i}>
-                    {l}
-                    <br />
-                  </span>
-                ))}
-              </p>
-            </div>
-            <div className="spirit-divider" />
-            <div className="spirit-block">
-              <img src={laxmiImg} alt="Mahalaxmi" className="deity-img" />
-              <p className={`spirit-text ${lang === "gu" ? "guj" : ""}`}>
-                <strong>{t.lakshmi}</strong>
-                {t.lakshmiDesc.split("\n").map((l, i) => (
-                  <span key={i}>
-                    {l}
-                    <br />
-                  </span>
-                ))}
-              </p>
-            </div>
-          </div>
-
-          <div className="signoff anim-8">
+          {/* Signoff & Author */}
+          <div className="signoff anim-7">
             <div className="ornament-line" />
             <p className={`signoff-from ${lang === "gu" ? "guj" : ""}`}>
               {t.from}
@@ -240,13 +253,10 @@ export default function App() {
             <p className={`signoff-wish ${lang === "gu" ? "guj" : ""}`}>
               {t.wish}
             </p>
-            <div className="ornament-line" style={{ marginTop: "0.5rem" }} />
+            <div className="author-tag anim-8">MADE BY Sudhir Kuchara</div>
           </div>
         </div>
       </div>
-
-      {/* ── Author watermark — bottom-left below card ── */}
-      <div className="author-tag anim-0 white">MADE BY Sudhir Kuchara</div>
     </div>
   );
 }
