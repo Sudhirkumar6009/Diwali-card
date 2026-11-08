@@ -1,12 +1,52 @@
 <!doctype html>
-<html lang="en">
+<html lang="gu">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/diya.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>diwali</title>
+    <meta name="description" content="કુચારા પરિવાર તરફથી દિવાળીની હાર્દિક શુભકામનાઓ" />
+    <meta name="theme-color" content="#3d0008" />
+    <title>શુભ દીપાવલી – કુચારા પરિવાર</title>
+    <!-- Google Fonts preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Gujarati + decorative fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+Gujarati:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body { background: #1A0800; margin: 0; }
+      #loading-overlay {
+        position: fixed; inset: 0; z-index: 9999;
+        background: radial-gradient(ellipse at center, #5C2000 0%, #2A0E00 55%, #1A0800 100%);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        transition: opacity .9s ease, visibility .9s ease;
+      }
+      #loading-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+      @keyframes loading-pulse {
+        0%,100% { transform: scale(1); filter: brightness(1); }
+        50%     { transform: scale(1.15); filter: brightness(1.5); }
+      }
+    </style>
   </head>
   <body>
+    <!-- Loading overlay -->
+    <div id="loading-overlay">
+      <svg width="90" height="100" viewBox="0 0 100 110" style="animation:loading-pulse 1.4s ease-in-out infinite">
+        <ellipse cx="50" cy="88" rx="30" ry="7" fill="#8B4513" opacity="0.35"/>
+        <path d="M16 70 Q50 80 84 70 Q80 90 50 94 Q20 90 16 70 Z" fill="#CD7F32"/>
+        <ellipse cx="50" cy="67" rx="24" ry="6" fill="#DAA520" opacity="0.9"/>
+        <rect x="47" y="42" width="6" height="26" rx="3" fill="#CD853F"/>
+        <ellipse cx="50" cy="40" rx="9" ry="15" fill="#FF8C00" opacity="0.9"/>
+        <ellipse cx="50" cy="36" rx="6" ry="11" fill="#FFD700" opacity="0.9"/>
+        <ellipse cx="50" cy="32" rx="3.5" ry="7" fill="white" opacity="0.8"/>
+        <ellipse cx="50" cy="27" rx="1.8" ry="4" fill="white" opacity="0.9"/>
+      </svg>
+      <p style="color:#DAA520;font-family:'Noto Serif Gujarati',serif;font-size:1.2rem;margin-top:24px;letter-spacing:2px">
+        શુભ દીપાવલી...
+      </p>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
