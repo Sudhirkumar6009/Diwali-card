@@ -294,8 +294,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   width: 100%;
+  padding: .3rem 0 .15rem;
 }
 
 /* ── Staggered entrance ── */
@@ -346,20 +347,6 @@ body {
   text-shadow: 0 1px 4px rgba(0,0,0,.7);
 }
 
-/* ── Diya wrap (delicate small size) ── */
-.diya-wrap {
-  position: relative;
-  display: flex; align-items: center; justify-content: center;
-  width: 58px; height: 50px;
-  flex-shrink: 0;
-}
-.diya-ring {
-  position: absolute;
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,101,10,.25) 0%, rgba(218,165,32,.1) 50%, transparent 70%);
-  border: 1px solid rgba(255,140,0,.25);
-}
 
 /* ── Spiritual row — framed alcove ── */
 .spiritual-row {
@@ -418,34 +405,90 @@ body {
 }
 .gold-line { color: #FFE082 !important; font-weight: 700; }
 
-/* ── Sign-off ── */
-.signoff {
+/* ── Sign-off Row flanked by Sweets (left) and Dipak (right) ── */
+.signoff-row {
   width: 100%;
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: 0 .15rem;
+}
+.signoff-flank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 58px;
+}
+.signoff-flank-left {
+  justify-content: flex-start;
+}
+.signoff-flank-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 52px;
+}
+.signoff-sweets-img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+  transform: translateZ(0);
+}
+.signoff-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
 }
 .signoff-from   { font-size: .8rem; color: #FFE082; font-style: italic; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
 .signoff-family {
-  font-size: clamp(1.3rem, 4.2vw, 1.85rem);
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
   font-weight: 900;
   letter-spacing: 1px;
   color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
   text-shadow: 0 0 18px rgba(255,200,60,.8), 0 2px 4px rgba(0,0,0,.8);
 }
-.signoff-wish   { font-size: clamp(.72rem, 1.8vw, .84rem); color: #FFFFFF; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.signoff-wish   { font-size: clamp(.7rem, 1.7vw, .82rem); color: #FFFFFF; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
 
-/* ── Author watermark — highlighted intense white ── */
-.author-tag {
-  margin-top: 6px;
-  font-size: .72rem;
-  font-weight: 700;
-  color: #FFFFFF !important;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.95), 0 0 20px rgba(255, 255, 255, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9);
-  font-family: "Cinzel Decorative", serif;
-  letter-spacing: .8px;
-  white-space: nowrap;
+/* ── Bottom footer row — MADE BY placed bottom-left ── */
+.card-footer-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2px;
+}
+.author-tag-bl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(218, 165, 32, 0.35);
+  border-radius: 50px;
+  padding: .16rem .65rem;
   user-select: none;
   pointer-events: none;
+}
+.author-by {
+  font-size: .62rem;
+  color: #FFD580;
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 700;
+  letter-spacing: .8px;
+}
+.author-name {
+  font-size: .74rem;
+  color: #FFFFFF !important;
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 900;
+  letter-spacing: .8px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.95), 0 0 20px rgba(255, 255, 255, 0.6), 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
 /* ══════════════════════════════════════════
@@ -454,16 +497,17 @@ body {
 @media (max-height: 700px) {
   .diwali-card { height: min(97vh, 620px); }
   .card-body { padding: 42px .9rem .6rem; }
-  .diya-wrap { width: 90px; height: 85px; }
-  .diya-ring { width: 80px; height: 80px; }
   .deity-img { width: 52px; height: 52px; }
   .card-title { font-size: clamp(1.4rem, 4.5vw, 2rem); }
 }
 
 @media (max-width: 380px) {
-  .card-body { padding-left: .75rem; padding-right: .75rem; }
-  .deity-img { width: 50px; height: 50px; }
+  .card-body { padding-left: .65rem; padding-right: .65rem; }
+  .deity-img { width: 48px; height: 48px; }
   .corner-rangoli { display: none; }
+  .signoff-flank { width: 44px; }
+  .signoff-sweets-img { width: 42px; height: 42px; }
+  .signoff-flank-right { width: 44px; height: 44px; }
 }
 
 /* ══════════════════════════════════════════

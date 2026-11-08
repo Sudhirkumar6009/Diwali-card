@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import ganpatiImg from "./assets/Ganpati.png";
 import laxmiImg from "./assets/Laxmiji.png";
+import sweetsImg from "./assets/sweets.png";
 import { Diya } from "./components/Diya";
 import { FloatingPetals } from "./components/FloatingPetals";
 import { Rangoli } from "./components/Rangoli";
@@ -15,7 +16,7 @@ const T = {
   gu: {
     badge: "॥ શ્રી ગણેશાય નમઃ 🙏 ॥",
     title: "શુભ દીપાવલી",
-    sub: "કુચારા પરિવાર તરફથી",
+    sub: "",
     greet1: "આપ સૌને અને આપના સમગ્ર પરિવારને",
     greet2: "દિવાળીના પાવન પર્વની હાર્દિક શુભકામનાઓ!",
     ganesh: "ૐ ગં ગણપતયે નમઃ",
@@ -24,7 +25,7 @@ const T = {
     lakshmi: "ૐ શ્રીં મહાલક્ષ્મ્યૈ નમઃ",
     lakshmiDesc: "માતા લક્ષ્મીની કૃપાથી ઘરમાં ધન,\nસુખ, સમૃદ્ધિ અને આનંદ રહે.",
     from: "સ્નેહપૂર્વક,",
-    family: "કુચારા પરિવાર",
+    family: "કુચારા પરિવાર તરફથી",
     wish: "આપ સૌને દિવાળી તથા નૂતન વર્ષાભિનંદન! 🎉",
   },
   en: {
@@ -92,7 +93,8 @@ export default function App() {
     cancelAnimationFrame(rafRef.current);
     const card = cardRef.current;
     if (card) {
-      card.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
+      card.style.transform =
+        "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
     }
   }, []);
 
@@ -144,7 +146,7 @@ export default function App() {
           <Rangoli size={100} />
         </div>
 
-        {/* ── Top controls (Sound & Language) securely nested inside card header ── */}
+        {/* ── Top controls (Sound & Language) ── */}
         <div className="card-top-controls anim-0">
           <button
             className={`sound-btn ${muted ? "sound-muted" : ""}`}
@@ -173,12 +175,12 @@ export default function App() {
 
         {/* ── Card content ── */}
         <div className="card-body">
-          {/* Header group */}
-          <div className="card-header-group">
-            <span className={`badge anim-1 ${lang === "gu" ? "guj" : ""}`}>
+          {/* 1. Header Group — Spaciously arranged Dipawali title */}
+          <div className="card-header-group anim-1">
+            <span className={`badge ${lang === "gu" ? "guj" : ""}`}>
               {t.badge}
             </span>
-
+            <br />
             <h1
               className={`card-title gold-text anim-2 ${lang === "gu" ? "guj" : "cinzel"}`}
             >
@@ -192,19 +194,8 @@ export default function App() {
 
           <div className="ornament-line anim-3" />
 
-          {/* Delicate Small Diya Emblem */}
-          <div className="diya-wrap anim-4">
-            <div className="diya-ring animate-pulse-glow" />
-            <Diya
-              size={48}
-              interactive
-              glowColor="#FFD700"
-              className="relative z-10"
-            />
-          </div>
-
-          {/* Sacred Deities */}
-          <div className="spiritual-row anim-5">
+          {/* 2. Sacred Deities (Shree Ganesh & Goddess Lakshmi) */}
+          <div className="spiritual-row anim-4">
             <div className="spirit-block">
               <img
                 src={ganpatiImg}
@@ -244,8 +235,8 @@ export default function App() {
             </div>
           </div>
 
-          {/* Greeting Box */}
-          <div className="greeting anim-6">
+          {/* 3. Greeting Box */}
+          <div className="greeting anim-5">
             <p className={`greeting-line ${lang === "gu" ? "guj" : ""}`}>
               {t.greet1}
             </p>
@@ -256,21 +247,58 @@ export default function App() {
             </p>
           </div>
 
-          {/* Signoff & Author */}
-          <div className="signoff anim-7">
-            <div className="ornament-line" />
-            <p className={`signoff-from ${lang === "gu" ? "guj" : ""}`}>
-              {t.from}
-            </p>
-            <h2
-              className={`gold-text signoff-family animate-glow-text ${lang === "gu" ? "guj" : ""}`}
+          <div className="ornament-line anim-3" />
+          {/* 4. Family Sign-off flanked by Sweets on the left and Dipak on the right */}
+          <div className="signoff-row anim-6">
+            {/* Left: Sweets PNG */}
+            <div
+              className="signoff-flank signoff-flank-left"
+              title="Diwali Sweets"
             >
-              {t.family}
-            </h2>
-            <p className={`signoff-wish ${lang === "gu" ? "guj" : ""}`}>
-              {t.wish}
-            </p>
-            <div className="author-tag anim-8">MADE BY Sudhir Kuchara</div>
+              <img
+                src={sweetsImg}
+                alt="Diwali Sweets"
+                className="signoff-sweets-img"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            {/* Center: Family Sign-off */}
+            <div className="signoff-center">
+              <p className={`signoff-from ${lang === "gu" ? "guj" : ""}`}>
+                {t.from}
+              </p>
+              <h2
+                className={`gold-text signoff-family animate-glow-text ${lang === "gu" ? "guj" : ""}`}
+              >
+                {t.family}
+              </h2>
+              <p className={`signoff-wish ${lang === "gu" ? "guj" : ""}`}>
+                {t.wish}
+              </p>
+            </div>
+
+            {/* Right: Clean Dipak image */}
+            <div
+              className="signoff-flank signoff-flank-right"
+              title="Shubh Deep"
+            >
+              <Diya
+                size={48}
+                interactive
+                glowColor="#FFD700"
+                className="relative z-10"
+              />
+            </div>
+          </div>
+
+          {/* 5. Display MADE BY SUDHIR KUCHARA after signoff (bottom-left) */}
+          <div className="card-footer-row anim-7">
+            <div className="author-tag-bl">
+              <span className="author-by">MADE BY</span>
+              <span className="author-name">SUDHIR KUCHARA</span>
+            </div>
           </div>
         </div>
       </div>
